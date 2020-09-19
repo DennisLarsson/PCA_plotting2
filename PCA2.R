@@ -1,4 +1,5 @@
 library(adegenet)
+#Version 2.0
 #if you dont have adegenet installed, install using: install.packages("adegenet")
 
 setwd("/path/to/workDirectory/")
