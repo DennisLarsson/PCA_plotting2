@@ -7,6 +7,8 @@ outputfile.name <-"spicatum"
 popmap="/path/to/popmap"      #give the name of the popmap if it is in the work directory or the full path if it is somewhere else
 number.indv=110
 number.loci=2544
+ld.pos.PC12 = "topright" #where the legend will be placed in the PC1-2 plot: topright, topleft, bottomright, bottomleft
+ld.pos.PC13 = "topright" #where the legend will be placed in the PC1-3 plot: topright, topleft, bottomright, bottomleft
 
 pop <-read.delim(popmap, header = FALSE, as.is=T)
 #make sure to edit n.ind to the number of individuals your dataset has and n.loc to the number of loci you have.
@@ -60,8 +62,8 @@ plot.PCA <- function(x,y,pos,plot.cex,plot.pt.cex,plot.ncol) {
 pdf(file=paste("PCA_",outputfile.name,".pdf",sep=""), height = 8, width = 8, title = outputfile.name)
 barplot(pca1$eig[1:10], xlab="component", ylab="eigen value")
 
-plot.PCA(1,2,"bottomleft",plot.cex=0.7,plot.pt.cex=1,plot.ncol=2)
-plot.PCA(1,3,"bottomleft",plot.cex=0.7,plot.pt.cex=1,plot.ncol=2)
+plot.PCA(1,2,ld.pos.PC12,plot.cex=0.7,plot.pt.cex=1,plot.ncol=2)
+plot.PCA(1,3,ld.pos.PC13,plot.cex=0.7,plot.pt.cex=1,plot.ncol=2)
 dev.off()
 
 indvnames <- as.vector(labels(pca1$li)[[1]])
