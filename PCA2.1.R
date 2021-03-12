@@ -1,3 +1,4 @@
+#version 2.11
 library(adegenet)
 #if you dont have adegenet installed, install using: install.packages("adegenet")
 
