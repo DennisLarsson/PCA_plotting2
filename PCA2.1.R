@@ -59,19 +59,23 @@ plot.PCA <- function(x,y,pos,plot.cex,plot.pt.cex,plot.ncol) {
   }
   legend(x=pos, legend=uniq.pop, col = unique(pop.features[[1]]), pch = unique(pop.features[[2]]), pt.cex=plot.pt.cex, cex=plot.cex, ncol=plot.ncol,y.intersp=1)
 }
-
 pdf(file=paste("PCA_",outputfile.name,".pdf",sep=""), height = 8, width = 8, title = outputfile.name)
 barplot(pca1$eig[1:10], xlab="component", ylab="eigen value")
 
 plot.PCA(1,2,ld.pos.PC12,plot.cex=0.7,plot.pt.cex=1,plot.ncol=2)
 plot.PCA(1,3,ld.pos.PC13,plot.cex=0.7,plot.pt.cex=1,plot.ncol=2)
+dev.off()
 
 indvnames <- as.vector(labels(pca1$li)[[1]])
-plot.default(x=pca1$li[,1], y=pca1$li[,2], xlab="PC1", ylab="PC2",xlim=c(min(pca1$li[,1]),max(pca1$li[,1])), ylim=c(min(pca1$li[,2]),max(pca1$li[,2])), main = "PCA plot of PC1 vs PC2 text labels")
-text(pca1$li[,1], pca1$li[,2], labels=indvnames, cex= 0.4, pos = 4)
 
-plot.default(x=pca1$li[,1], y=pca1$li[,3], xlab="PC1", ylab="PC3",xlim=c(min(pca1$li[,1]),max(pca1$li[,1])), ylim=c(min(pca1$li[,3]),max(pca1$li[,3])), main = "PCA plot of PC1 vs PC3 text labels")
-text(pca1$li[,1], pca1$li[,3], labels=indvnames, cex= 0.4, pos = 4)
+png(filename = paste("PCA_PC12_label_",outputfile.name,".png",sep=""),width = 1200, height = 1200)
+plot.default(x=pca1$li[,1], y=pca1$li[,2], xlab="PC1", ylab="PC2",xlim=c(min(pca1$li,1),max(pca1$li,1)), ylim=c(min(pca1$li,2),max(pca1$li,2)), main = "PCA plot of PC1 vs PC2 text labels")
+text(pca1$li[,1], pca1$li[,2], labels=indvnames, cex= 0.9, pos = 4)
+dev.off()
+
+png(filename = paste("PCA_PC13_label_",outputfile.name,".png",sep=""),width = 1200, height = 1200)
+plot.default(x=pca1$li[,1], y=pca1$li[,3], xlab="PC1", ylab="PC3",xlim=c(min(pca1$li,1),max(pca1$li,1)), ylim=c(min(pca1$li,3),max(pca1$li,3)), main = "PCA plot of PC1 vs PC3 text labels")
+text(pca1$li[,1], pca1$li[,3], labels=indvnames, cex= 0.9, pos = 4)
 dev.off()
 
 
