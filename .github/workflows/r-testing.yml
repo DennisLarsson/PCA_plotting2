@@ -34,10 +34,13 @@ jobs:
             ${{ env.IMAGE_NAME }} \
             Rscript PCA2.2.R)
 
+          # List files in the output folder
+          docker exec $container_id ls /output/
+
           # Copy the output files
-          docker cp $container_id:/output /output/PCA_spicatum_group.pdf
-          docker cp $container_id:/output /output/PCA_spicatum_group_PC1_2.png
-          docker cp $container_id:/output /output/PCA_spicatum_group_PC1_3.png
+          docker cp $container_id:/output/PCA_spicatum_group.pdf .
+          docker cp $container_id:/output/PCA_spicatum_group_PC1_2.png .
+          docker cp $container_id:/output/PCA_spicatum_group_PC1_3.png .
 
           # Stop and remove the container
           docker stop $container_id
