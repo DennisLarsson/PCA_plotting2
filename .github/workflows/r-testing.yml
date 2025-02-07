@@ -5,6 +5,9 @@ on:
     branches: [ "*" ]
     tags: [ "*" ]
 
+env:
+  IMAGE_NAME: ghcr.io/dennislarsson/r_image:set-up-ci-workflow-a4a19c3@sha256:281607d993dcba52fd49582ac7054cd949bccf3ec9391dd0fa8eaa4a8d0725fc
+
 jobs:
   test-r:
     runs-on: ubuntu-22.04
@@ -17,7 +20,7 @@ jobs:
           password: ${{ secrets.GHCR_PAT }} 
 
       - name: Pull the Docker image
-        run: docker pull ghcr.io/dennislarsson/r_image:set-up-ci-workflow-a4a19c3@sha256:281607d993dcba52fd49582ac7054cd949bccf3ec9391dd0fa8eaa4a8d0725fc
+        run: docker pull ${{ env.IMAGE_NAME }}
   
       - name: Checkout repository
         uses: actions/checkout@v4.1.6
@@ -28,7 +31,7 @@ jobs:
           container_id=$(docker run -d \
             -v $(pwd)/test_files:/test_files \
             -v $(pwd)/PCA2.2.R:/PCA2.2.R \
-            ghcr.io/dennislarsson/r_image:set-up-ci-workflow-a4a19c3@sha256:281607d993dcba52fd49582ac7054cd949bccf3ec9391dd0fa8eaa4a8d0725fc \
+            ${{ env.IMAGE_NAME }} \
             Rscript PCA2.2.R)
 
           # Copy the output files
