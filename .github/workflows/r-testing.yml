@@ -48,10 +48,10 @@ jobs:
       - name: Compare PDF outputs
         run: |
           # Assuming generated PDFs are in the same directory as the script
-          diff expected_files/expected_PCA.pdf /output/PCA_spicatum_group.pdf
+          diff expected_files/expected_PCA.pdf ./PCA_spicatum_group.pdf
 
       - name: Compare PNG outputs
         run: |
           # Assuming generated PNGs are in the same directory as the script
-          diff expected_files/expected_PCA_PC1_2.png /output/PCA_spicatum_group_PC1_2.png
-          diff expected_files/expected_PCA_PC1_3.png /output/PCA_spicatum_group_PC1_3.png
+          diff expected_files/expected_PCA_PC1_2.png ./PCA_spicatum_group_PC1_2.png
+          diff expected_files/expected_PCA_PC1_3.png ./PCA_spicatum_group_PC1_3.png
