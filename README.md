@@ -1,6 +1,6 @@
 # PCA_plotting2
 
-Version 2.0
+Version 2.1
 
 A script to calculate and plot principal components.
 
