@@ -35,14 +35,14 @@ jobs:
             Rscript PCA2.2.R)
 
           # Copy the output files
-          docker cp $container_id:/output/ /output/
+          docker cp $container_id:/output /output
 
           # Stop and remove the container
           docker stop $container_id
           docker rm $container_id
 
       - name: Check the content of output folder
-        run: ls /output/
+        run: ls /output
 
       - name: Compare PDF outputs
         run: |
