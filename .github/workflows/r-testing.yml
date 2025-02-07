@@ -6,7 +6,7 @@ on:
     tags: [ "*" ]
 
 env:
-  IMAGE_NAME: ghcr.io/dennislarsson/r_image:set-up-ci-workflow-a4a19c3@sha256:281607d993dcba52fd49582ac7054cd949bccf3ec9391dd0fa8eaa4a8d0725fc
+  IMAGE_NAME: ghcr.io/dennislarsson/r_image:set-up-ci-workflow-ffd9c4b@sha256:41fa6a60e94a75bf73f39421483e423c3082e8d2c8af64b21f390965e85c0730
 
 jobs:
   test-r:
