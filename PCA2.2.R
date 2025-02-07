@@ -95,7 +95,7 @@ plot.PCA <- function(x, y, pos, plot.cex, plot.pt.cex, plot.ncol) {
          y.intersp = 1)
 }
 
-pdf(file = paste("PCA_", outputfile_name, ".pdf", sep = ""),
+pdf(file = paste("test_files/PCA_", outputfile_name, ".pdf", sep = ""),
     height = 8,
     width = 8,
     title = outputfile_name)
@@ -123,12 +123,12 @@ plot.default(x = pca1$li[, 1], y = pca1$li[, 3],
 text(pca1$li[, 1], pca1$li[, 3], labels = indvnames, cex = 0.4, pos = 4)
 dev.off()
 
-png(file = paste("PCA_", outputfile_name, "_PC1_2.png", sep = ""),
+png(file = paste("test_files/PCA_", outputfile_name, "_PC1_2.png", sep = ""),
     height = 800, width = 800, pointsize = 12)
 plot.PCA(1, 2, ld_pos_pc12, plot.cex = 0.7, plot.pt.cex = 1, plot.ncol = 2)
 dev.off()
 
-png(file = paste("PCA_", outputfile_name, "_PC1_3.png", sep = ""),
+png(file = paste("test_files/PCA_", outputfile_name, "_PC1_3.png", sep = ""),
     height = 800, width = 800, pointsize = 12)
 plot.PCA(1, 3, ld_pos_pc13, plot.cex = 0.7, plot.pt.cex = 1, plot.ncol = 2)
 dev.off()
