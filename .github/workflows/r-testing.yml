@@ -34,8 +34,11 @@ jobs:
             ${{ env.IMAGE_NAME }} \
             sh -c "Rscript PCA2.2.R; touch /done.txt; tail -f /dev/null")
 
-          # List files in the output folder
-          docker exec $container_id ls /output/
+          # Wait for the signal file
+          while [ "$(docker exec $container_id sh -c '[ -f /done.txt ] && echo 'yes' || echo 'no')"!= "yes" ]; do
+            echo "Waiting for R script to complete..."
+            sleep 5
+          done
 
           # Copy the output files
           docker cp $container_id:/output/PCA_spicatum_group.pdf .
