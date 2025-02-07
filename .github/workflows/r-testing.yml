@@ -19,7 +19,7 @@ jobs:
 
       - name: Install R package dependencies
         run: |
-          install.packages("adegenet") # Add any other packages your script needs
+          Rscript -e "install.packages('adegenet')"
 
       - name: Run R script
         run: Rscript PCA2.2.R
