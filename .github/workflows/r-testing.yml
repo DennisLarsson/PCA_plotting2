@@ -22,13 +22,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4.1.6
 
-      - name: Run R script in container
+      - name: Run R script in container and copy output files
         run: |
-          docker run --rm \
+          # Run the container in the background and get the container ID
+          container_id=$(docker run -d \
             -v $(pwd)/test_files:/test_files \
             -v $(pwd)/PCA2.2.R:/PCA2.2.R \
             ghcr.io/dennislarsson/r_image:set-up-ci-workflow-a4a19c3@sha256:281607d993dcba52fd49582ac7054cd949bccf3ec9391dd0fa8eaa4a8d0725fc \
-            Rscript PCA2.2.R
+            Rscript PCA2.2.R)
+
+          # Copy the output files
+          docker cp $container_id:/PCA_spicatum_group.pdf .
+          docker cp $container_id:/PCA_spicatum_group_PC1_2.png .
+          docker cp $container_id:/PCA_spicatum_group_PC1_3.png .
+
+          # Stop and remove the container
+          docker stop $container_id
+          docker rm $container_id
 
       - name: Compare PDF outputs
         run: |
