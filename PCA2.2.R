@@ -2,15 +2,15 @@
 library(adegenet)
 # install using: install.packages("adegenet")
 
-setwd("/path/to/workDirectory/")
-infile <- "spicatum.stru"
-outputfile_name <- "spicatum"
+#setwd("/")
+infile <- "test_files/spicgrp.stru"
+outputfile_name <- "spicatum_group"
 
 # give the name of the popmap if it is in the work directory
 # or the full path if it is somewhere else
-popmap <- "/path/to/popmap"
-number_indv <- 110
-number_loci <- 2544
+popmap <- "test_files/popmap_spicGroup_sub_Grp"
+number_indv <- 89
+number_loci <- 41912
 
 # where the legend will be placed in the PC1-2 plot:
 #  topright, topleft, bottomright, bottomleft
@@ -32,7 +32,7 @@ object1 <- read.structure(infile,
                           row.marknames = 1,
                           NA.char = "-9",
                           ask = FALSE)
-
+print("Successfully loaded in stru file")
 data_matrix <- tab(object1, freq = TRUE, NA.method = "mean")
 
 pca1 <- dudi.pca(data_matrix, scale = FALSE, scannf = FALSE, nf = 3)
@@ -121,4 +121,14 @@ plot.default(x = pca1$li[, 1], y = pca1$li[, 3],
              main = "PCA plot of PC1 vs PC3 text labels")
 
 text(pca1$li[, 1], pca1$li[, 3], labels = indvnames, cex = 0.4, pos = 4)
+dev.off()
+
+png(file = paste("PCA_", outputfile_name, "_PC1_2.png", sep = ""),
+    height = 800, width = 800, pointsize = 12)
+plot.PCA(1, 2, ld_pos_pc12, plot.cex = 0.7, plot.pt.cex = 1, plot.ncol = 2)
+dev.off()
+
+png(file = paste("PCA_", outputfile_name, "_PC1_3.png", sep = ""),
+    height = 800, width = 800, pointsize = 12)
+plot.PCA(1, 3, ld_pos_pc13, plot.cex = 0.7, plot.pt.cex = 1, plot.ncol = 2)
 dev.off()
