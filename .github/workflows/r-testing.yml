@@ -35,7 +35,7 @@ jobs:
             sh -c "Rscript PCA2.2.R; touch /done.txt; tail -f /dev/null")
 
           # Wait for the signal file
-          while [ "$(docker exec $container_id sh -c '[ -f /done.txt ] && echo 'yes' || echo 'no')"!= "yes" ]; do
+          while [ "$(docker exec $container_id sh -c '[ -f /done.txt ] && echo yes || echo no')"!= "yes" ]; do
             echo "Waiting for R script to complete..."
             sleep 5
           done
