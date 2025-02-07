@@ -32,7 +32,7 @@ jobs:
             -v $(pwd)/test_files:/test_files \
             -v $(pwd)/PCA2.2.R:/PCA2.2.R \
             ${{ env.IMAGE_NAME }} \
-            Rscript PCA2.2.R)
+            sh -c "Rscript PCA2.2.R; touch /done.txt; tail -f /dev/null")
 
           # List files in the output folder
           docker exec $container_id ls /output/
