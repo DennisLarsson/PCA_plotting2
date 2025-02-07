@@ -35,19 +35,22 @@ jobs:
             Rscript PCA2.2.R)
 
           # Copy the output files
-          docker cp $container_id:/test_files/ ./output/
+          docker cp $container_id:/output/ /output/
 
           # Stop and remove the container
           docker stop $container_id
           docker rm $container_id
 
+      - name: Check the content of output folder
+        run: ls /output/
+
       - name: Compare PDF outputs
         run: |
           # Assuming generated PDFs are in the same directory as the script
-          diff expected_files/expected_PCA.pdf output/PCA_spicatum_group.pdf
+          diff expected_files/expected_PCA.pdf /output/PCA_spicatum_group.pdf
 
       - name: Compare PNG outputs
         run: |
           # Assuming generated PNGs are in the same directory as the script
-          diff expected_files/expected_PCA_PC1_2.png output/PCA_spicatum_group_PC1_2.png
-          diff expected_files/expected_PCA_PC1_3.png output/PCA_spicatum_group_PC1_3.png
+          diff expected_files/expected_PCA_PC1_2.png /output/PCA_spicatum_group_PC1_2.png
+          diff expected_files/expected_PCA_PC1_3.png /output/PCA_spicatum_group_PC1_3.png
