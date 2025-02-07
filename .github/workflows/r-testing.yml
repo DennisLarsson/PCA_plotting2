@@ -27,7 +27,7 @@ jobs:
           docker run --rm \
             -v $(pwd)/test_files:/test_files \
             ghcr.io/dennislarsson/r_image:set-up-ci-workflow-a4a19c3@sha256:281607d993dcba52fd49582ac7054cd949bccf3ec9391dd0fa8eaa4a8d0725fc \
-            Rscript /app/PCA2.2.R
+            Rscript PCA2.2.R
 
       - name: Compare PDF outputs
         run: |
