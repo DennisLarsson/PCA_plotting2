@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-22.04
     container: ghcr.io/dennislarsson/r_image:set-up-ci-workflow-a4a19c3@sha256:281607d993dcba52fd49582ac7054cd949bccf3ec9391dd0fa8eaa4a8d0725fc
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4.1.6
-
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.6
 
       - name: Run R script
         run: Rscript PCA2.2.R
