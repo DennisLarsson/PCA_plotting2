@@ -45,9 +45,6 @@ jobs:
           docker stop $container_id
           docker rm $container_id
 
-      - name: Check the content of output folder
-        run: ls /output
-
       - name: Compare PDF outputs
         run: |
           # Assuming generated PDFs are in the same directory as the script
