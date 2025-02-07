@@ -32,9 +32,9 @@ jobs:
             Rscript PCA2.2.R)
 
           # Copy the output files
-          docker cp $container_id:/PCA_spicatum_group.pdf .
-          docker cp $container_id:/PCA_spicatum_group_PC1_2.png .
-          docker cp $container_id:/PCA_spicatum_group_PC1_3.png .
+          docker cp $container_id:PCA_spicatum_group.pdf .
+          docker cp $container_id:PCA_spicatum_group_PC1_2.png .
+          docker cp $container_id:PCA_spicatum_group_PC1_3.png .
 
           # Stop and remove the container
           docker stop $container_id
