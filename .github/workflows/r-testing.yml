@@ -8,7 +8,6 @@ on:
 jobs:
   test-r:
     runs-on: ubuntu-22.04
-    container: ghcr.io/dennislarsson/r_image:set-up-ci-workflow-a4a19c3@sha256:281607d993dcba52fd49582ac7054cd949bccf3ec9391dd0fa8eaa4a8d0725fc
     steps:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -17,11 +16,18 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_PAT }} 
 
+      - name: Pull the Docker image
+        run: docker pull ghcr.io/dennislarsson/r_image:set-up-ci-workflow-a4a19c3@sha256:281607d993dcba52fd49582ac7054cd949bccf3ec9391dd0fa8eaa4a8d0725fc
+  
       - name: Checkout repository
         uses: actions/checkout@v4.1.6
 
-      - name: Run R script
-        run: Rscript PCA2.2.R
+      - name: Run R script in container
+        run: |
+          docker run --rm \
+            -v $(pwd):/app \
+            ghcr.io/dennislarsson/r_image:set-up-ci-workflow-a4a19c3@sha256:281607d993dcba52fd49582ac7054cd949bccf3ec9391dd0fa8eaa4a8d0725fc \
+            Rscript /app/PCA2.2.R
 
       - name: Compare PDF outputs
         run: |
