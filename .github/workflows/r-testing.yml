@@ -6,7 +6,7 @@ on:
     tags: [ "*" ]
 
 env:
-  IMAGE_NAME: ghcr.io/dennislarsson/r_image:set-up-ci-workflow-ffd9c4b@sha256:41fa6a60e94a75bf73f39421483e423c3082e8d2c8af64b21f390965e85c0730
+  IMAGE_NAME: ghcr.io/dennislarsson/r_image:refs-tags-v1.0.0-60575e6
 
 jobs:
   test-r:
@@ -59,3 +59,9 @@ jobs:
           diff expected_files/expected_PCA_PC1_3.png ./PCA_spicatum_group_PC1_3.png
           diff expected_files/expected_component_eigen_values.png ./spicatum_group_component_eigen_values.png
           echo "All test files have passed successfully"
+        
+      - name: Test output path argument
+        run: 
+      
+      - name: Test if fails successfully when path doesn't exist
+        run: 
