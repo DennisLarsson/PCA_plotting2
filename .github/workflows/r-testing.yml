@@ -32,7 +32,7 @@ jobs:
             -v $(pwd)/test_files:/test_files \
             -v $(pwd)/PCA2.2.R:/PCA2.2.R \
             ${{ env.IMAGE_NAME }} \
-            sh -c "Rscript PCA2.2.R /test_folder/; touch /done.txt; tail -f /dev/null")
+            sh -c "mkdir /test_folder/; Rscript PCA2.2.R /test_folder/; touch /done.txt; tail -f /dev/null")
 
           # Check for done.txt every 5 seconds
           while ! docker exec $container_id test -f /done.txt; do
