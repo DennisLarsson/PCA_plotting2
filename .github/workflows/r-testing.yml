@@ -59,3 +59,23 @@ jobs:
           diff expected_files/expected_PCA_PC1_3.png ./PCA_spicatum_group_PC1_3.png
           diff expected_files/expected_component_eigen_values.png ./spicatum_group_component_eigen_values.png
           echo "All test files have passed successfully"
+        
+      - name: Test output path argument
+        run: |
+          container_id=$(docker run -d \
+            -v $(pwd)/test_files:/test_files \
+            -v $(pwd)/PCA2.2.R:/PCA2.2.R \
+            ${{ env.IMAGE_NAME }} \
+            sh -c "Rscript PCA2.2.R /test_path/; touch /done.txt; tail -f /dev/null")
+
+          # Check for done.txt every 5 seconds
+          while ! docker exec $container_id test -f /done.txt; do
+            sleep 5
+          done
+
+          docker exec $container_id test -d /test_path/PCA_spicatum_group_PC1_2.png
+          docker exec $container_id test -d /test_path/PCA_spicatum_group_PC1_3.png
+          docker exec $container_id test -d /test_path/spicatum_group_component_eigen_values.png
+      
+      - name: Test if fails successfully when path doesn't exist
+        run: 
