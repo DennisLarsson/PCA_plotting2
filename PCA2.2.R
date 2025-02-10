@@ -7,13 +7,11 @@ args <- commandArgs(trailingOnly = TRUE)
 if (length(args) > 0) {
   output_path <- args[1]
 } else {
-  output_path <- "/output/" # Default output path if no argument is provided
+  output_path <- "/output/"
 }
 
 if (!dir.exists(output_path)) {
-  message <- paste("Error: Output directory", output_path, "does not exist.\n")
-  cat(message)
-  quit(status = 1) # Or handle differently (e.g., create the directory?)
+  dir.create(output_path, recursive = TRUE)
 }
 
 #setwd("/")
