@@ -19,6 +19,8 @@ ld_pos_pc12 <- "topright"
 #  topright, topleft, bottomright, bottomleft
 ld_pos_pc13 <- "topright"
 
+debug_text_labels <- FALSE
+
 pop <- read.delim(popmap, header = FALSE, as.is = TRUE)
 
 # make sure to edit n.ind to the number of individuals your
@@ -95,34 +97,40 @@ plot.PCA <- function(x, y, pos, plot.cex, plot.pt.cex, plot.ncol) {
          y.intersp = 1)
 }
 
-pdf(file = paste("/output/PCA_", outputfile_name, ".pdf", sep = ""),
-    height = 8,
-    width = 8,
-    title = outputfile_name)
-barplot(pca1$eig[1:10], xlab = "component", ylab = "eigen value")
-
-plot.PCA(1, 2, ld_pos_pc12, plot.cex = 0.7, plot.pt.cex = 1, plot.ncol = 2)
-plot.PCA(1, 3, ld_pos_pc13, plot.cex = 0.7, plot.pt.cex = 1, plot.ncol = 2)
-
 indvnames <- as.vector(labels(pca1$li)[[1]])
 
-plot.default(x = pca1$li[, 1], y = pca1$li[, 2],
-             xlab = "PC1", ylab = "PC2",
-             xlim = c(min(pca1$li[, 1]), max(pca1$li[, 1])),
-             ylim = c(min(pca1$li[, 2]), max(pca1$li[, 2])),
-             main = "PCA plot of PC1 vs PC2 text labels")
-
-text(pca1$li[, 1], pca1$li[, 2], labels = indvnames, cex = 0.4, pos = 4)
-
-plot.default(x = pca1$li[, 1], y = pca1$li[, 3],
-             xlab = "PC1", ylab = "PC3",
-             xlim = c(min(pca1$li[, 1]), max(pca1$li[, 1])),
-             ylim = c(min(pca1$li[, 3]), max(pca1$li[, 3])),
-             main = "PCA plot of PC1 vs PC3 text labels")
-
-text(pca1$li[, 1], pca1$li[, 3], labels = indvnames, cex = 0.4, pos = 4)
+# Create png image with barplot of eigen values for each component
+png(file = paste("/output/", outputfile_name, "component-eigen-values.png",
+                 sep = ""), height = 800, width = 800, pointsize = 12)
+barplot(pca1$eig[1:10], xlab = "component", ylab = "eigen value")
 dev.off()
 
+if (debug_text_labels == TRUE) {
+  # Create png image of PC1-2 with text labels for debugging
+  png(file = paste("/output/PCA_", outputfile_name, "_PCA1_2-text-labels.png",
+                   sep = ""), height = 800, width = 800, pointsize = 12)
+  plot.default(x = pca1$li[, 1], y = pca1$li[, 2],
+               xlab = "PC1", ylab = "PC2",
+               xlim = c(min(pca1$li[, 1]), max(pca1$li[, 1])),
+               ylim = c(min(pca1$li[, 2]), max(pca1$li[, 2])),
+               main = "PCA plot of PC1 vs PC2 text labels")
+
+  text(pca1$li[, 1], pca1$li[, 2], labels = indvnames, cex = 0.4, pos = 4)
+  dev.off()
+
+  png(file = paste("/output/PCA_", outputfile_name, "_PCA1_3-text-labels.png",
+                   sep = ""), height = 800, width = 800, pointsize = 12)
+  plot.default(x = pca1$li[, 1], y = pca1$li[, 3],
+               xlab = "PC1", ylab = "PC3",
+               xlim = c(min(pca1$li[, 1]), max(pca1$li[, 1])),
+               ylim = c(min(pca1$li[, 3]), max(pca1$li[, 3])),
+               main = "PCA plot of PC1 vs PC3 text labels")
+
+  text(pca1$li[, 1], pca1$li[, 3], labels = indvnames, cex = 0.4, pos = 4)
+  dev.off()
+}
+
+# Create png image of PC1-2 and PC1-3
 png(file = paste("/output/PCA_", outputfile_name, "_PC1_2.png", sep = ""),
     height = 800, width = 800, pointsize = 12)
 plot.PCA(1, 2, ld_pos_pc12, plot.cex = 0.7, plot.pt.cex = 1, plot.ncol = 2)
