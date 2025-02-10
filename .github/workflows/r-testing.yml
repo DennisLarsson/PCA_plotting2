@@ -59,9 +59,3 @@ jobs:
           diff expected_files/expected_PCA_PC1_3.png ./PCA_spicatum_group_PC1_3.png
           diff expected_files/expected_component_eigen_values.png ./spicatum_group_component_eigen_values.png
           echo "All test files have passed successfully"
-        
-      - name: Test output path argument
-        run: 
-      
-      - name: Test if fails successfully when path doesn't exist
-        run: 
