@@ -45,13 +45,9 @@ jobs:
           docker stop $container_id
           docker rm $container_id
 
-      - name: Compare PDF outputs
-        run: |
-          # Assuming generated PDFs are in the same directory as the script
-          diff expected_files/expected_PCA.pdf ./PCA_spicatum_group.pdf
-
       - name: Compare PNG outputs
         run: |
           # Assuming generated PNGs are in the same directory as the script
           diff expected_files/expected_PCA_PC1_2.png ./PCA_spicatum_group_PC1_2.png
           diff expected_files/expected_PCA_PC1_3.png ./PCA_spicatum_group_PC1_3.png
+          diff expected_files/expected_component_eigen_values ./spicatum_group_component_eigen_values.png

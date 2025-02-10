@@ -100,14 +100,14 @@ plot.PCA <- function(x, y, pos, plot.cex, plot.pt.cex, plot.ncol) {
 indvnames <- as.vector(labels(pca1$li)[[1]])
 
 # Create png image with barplot of eigen values for each component
-png(file = paste("/output/", outputfile_name, "component-eigen-values.png",
+png(file = paste("output/", outputfile_name, "_component_eigen_values.png",
                  sep = ""), height = 800, width = 800, pointsize = 12)
-barplot(pca1$eig[1:10], xlab = "component", ylab = "eigen value")
+barplot(pca1$eig[1:10], xlab = "Component", ylab = "Eigen value")
 dev.off()
 
 if (debug_text_labels == TRUE) {
   # Create png image of PC1-2 with text labels for debugging
-  png(file = paste("/output/PCA_", outputfile_name, "_PCA1_2-text-labels.png",
+  png(file = paste("output/PCA_", outputfile_name, "_PCA1_2-text-labels.png",
                    sep = ""), height = 800, width = 800, pointsize = 12)
   plot.default(x = pca1$li[, 1], y = pca1$li[, 2],
                xlab = "PC1", ylab = "PC2",
@@ -118,7 +118,7 @@ if (debug_text_labels == TRUE) {
   text(pca1$li[, 1], pca1$li[, 2], labels = indvnames, cex = 0.4, pos = 4)
   dev.off()
 
-  png(file = paste("/output/PCA_", outputfile_name, "_PCA1_3-text-labels.png",
+  png(file = paste("output/PCA_", outputfile_name, "_PCA1_3-text-labels.png",
                    sep = ""), height = 800, width = 800, pointsize = 12)
   plot.default(x = pca1$li[, 1], y = pca1$li[, 3],
                xlab = "PC1", ylab = "PC3",
@@ -131,12 +131,12 @@ if (debug_text_labels == TRUE) {
 }
 
 # Create png image of PC1-2 and PC1-3
-png(file = paste("/output/PCA_", outputfile_name, "_PC1_2.png", sep = ""),
+png(file = paste("output/PCA_", outputfile_name, "_PC1_2.png", sep = ""),
     height = 800, width = 800, pointsize = 12)
 plot.PCA(1, 2, ld_pos_pc12, plot.cex = 0.7, plot.pt.cex = 1, plot.ncol = 2)
 dev.off()
 
-png(file = paste("/output/PCA_", outputfile_name, "_PC1_3.png", sep = ""),
+png(file = paste("output/PCA_", outputfile_name, "_PC1_3.png", sep = ""),
     height = 800, width = 800, pointsize = 12)
 plot.PCA(1, 3, ld_pos_pc13, plot.cex = 0.7, plot.pt.cex = 1, plot.ncol = 2)
 dev.off()
