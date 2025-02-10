@@ -10,6 +10,12 @@ if (length(args) > 0) {
   output_path <- "/output/" # Default output path if no argument is provided
 }
 
+if (!dir.exists(output_path)) {
+  message <- paste("Error: Output directory", output_path, "does not exist.\n")
+  cat(message)
+  quit(status = 1) # Or handle differently (e.g., create the directory?)
+}
+
 #setwd("/")
 infile <- "test_files/spicgrp.stru"
 outputfile_name <- "spicatum_group"
