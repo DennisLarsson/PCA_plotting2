@@ -39,10 +39,14 @@ jobs:
             sleep 5
           done
 
+          echo "PCA script finished running"
+
           # Copy the output files
           docker cp $container_id:/output/PCA_spicatum_group_PC1_2.png .
           docker cp $container_id:/output/PCA_spicatum_group_PC1_3.png .
           docker cp $container_id:/output/spicatum_group_component_eigen_values.png .
+
+          echo "files copied, stoping and removing container"
 
           # Stop and remove the container
           docker stop $container_id
@@ -54,3 +58,4 @@ jobs:
           diff expected_files/expected_PCA_PC1_2.png ./PCA_spicatum_group_PC1_2.png
           diff expected_files/expected_PCA_PC1_3.png ./PCA_spicatum_group_PC1_3.png
           diff expected_files/expected_component_eigen_values.png ./spicatum_group_component_eigen_values.png
+          echo "All test files have passed successfully"
