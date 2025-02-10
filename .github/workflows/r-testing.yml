@@ -6,7 +6,7 @@ on:
     tags: [ "*" ]
 
 env:
-  IMAGE_NAME: ghcr.io/dennislarsson/r_image:refs-tags-v1.0.0-60575e6
+  IMAGE_NAME: ghcr.io/dennislarsson/r_image:refs-tags-v1.0.1-5ce3b9f
 
 jobs:
   test-r:
