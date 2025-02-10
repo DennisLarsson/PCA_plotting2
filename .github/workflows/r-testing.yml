@@ -1,0 +1,61 @@
+name: R Testing
+
+on:
+  push:
+    branches: [ "*" ]
+    tags: [ "*" ]
+
+env:
+  IMAGE_NAME: ghcr.io/dennislarsson/r_image:refs-tags-v1.0.1-5ce3b9f
+
+jobs:
+  test-r:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_PAT }} 
+
+      - name: Pull the Docker image
+        run: docker pull ${{ env.IMAGE_NAME }}
+  
+      - name: Checkout repository
+        uses: actions/checkout@v4.1.6
+
+      - name: Run R script in container and copy output files
+        run: |
+          # Run the container in the background and get the container ID
+          container_id=$(docker run -d \
+            -v $(pwd)/test_files:/test_files \
+            -v $(pwd)/PCA2.2.R:/PCA2.2.R \
+            ${{ env.IMAGE_NAME }} \
+            sh -c "Rscript PCA2.2.R /test_folder/; touch /done.txt; tail -f /dev/null")
+
+          # Check for done.txt every 5 seconds
+          while ! docker exec $container_id test -f /done.txt; do
+            sleep 5
+          done
+
+          echo "PCA script finished running"
+
+          # Copy the output files
+          docker cp $container_id:/test_folder/PCA_spicatum_group_PC1_2.png .
+          docker cp $container_id:/test_folder/PCA_spicatum_group_PC1_3.png .
+          docker cp $container_id:/test_folder/spicatum_group_component_eigen_values.png .
+
+          echo "files copied, stoping and removing container"
+
+          # Stop and remove the container
+          docker stop $container_id
+          docker rm $container_id
+
+      - name: Compare PNG outputs
+        run: |
+          # Assuming generated PNGs are in the same directory as the script
+          diff expected_files/expected_PCA_PC1_2.png ./PCA_spicatum_group_PC1_2.png
+          diff expected_files/expected_PCA_PC1_3.png ./PCA_spicatum_group_PC1_3.png
+          diff expected_files/expected_component_eigen_values.png ./spicatum_group_component_eigen_values.png
+          echo "All test files have passed successfully"
